@@ -31,4 +31,10 @@ public class Car {
     @NotBlank
     @Column(name = "color", nullable = false)
     private String color;
+
+    public Car(String model, String regNumber, String color) {
+        this.model = model;
+        this.regNumber = regNumber;
+        this.color = color;
+    }
 }

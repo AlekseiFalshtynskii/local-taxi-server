@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import ru.spring.localtaxi.domain.Car;
 import ru.spring.localtaxi.domain.Role;
 import ru.spring.localtaxi.domain.User;
 import ru.spring.localtaxi.enums.RoleName;
@@ -70,8 +71,15 @@ public class AuthController {
                     HttpStatus.BAD_REQUEST);
         }
 
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()), signUpRequest.getName());
+        User user = new User(
+                signUpRequest.getUsername(),
+                signUpRequest.getEmail(),
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getFirstName(),
+                signUpRequest.getLastName(),
+                signUpRequest.getMiddleName(),
+                new Car(signUpRequest.getCar().getModel(), signUpRequest.getCar().getRegNumber(), signUpRequest.getCar().getColor())
+        );
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
