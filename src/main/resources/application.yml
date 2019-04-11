@@ -1,1 +1,5 @@
-
+local:
+  taxi:
+    app:
+      jwtSecret: jwtLocalTaxiSecretKey
+      jwtExpiration: 86400
