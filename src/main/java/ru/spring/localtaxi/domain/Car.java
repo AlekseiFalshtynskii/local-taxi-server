@@ -32,9 +32,13 @@ public class Car {
     @Column(name = "color", nullable = false)
     private String color;
 
-    public Car(String model, String regNumber, String color) {
+    private Car(String model, String regNumber, String color) {
         this.model = model;
         this.regNumber = regNumber;
         this.color = color;
+    }
+
+    public static Car of(String model, String regNumber, String color) {
+        return new Car(model, regNumber, color);
     }
 }

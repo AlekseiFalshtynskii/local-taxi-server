@@ -1,5 +1,6 @@
 package ru.spring.localtaxi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,6 @@ import org.hibernate.annotations.LazyCollection;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -26,17 +26,15 @@ public class User {
     private Long id;
 
     @NotBlank
-    @Size(min = 3, max = 50)
     @Column(name = "username", nullable = false)
     private String username;
 
+    @JsonIgnore
     @NotBlank
-    @Size(min = 6, max = 100)
     @Column(name = "password", nullable = false)
     private String password;
 
     @NotBlank
-    @Size(max = 50)
     @Email
     @Column(name = "email", nullable = false)
     private String email;
@@ -65,13 +63,17 @@ public class User {
     @LazyCollection(value = FALSE)
     private Car car;
 
-    public User(String username, String email, String password, String firstName, String lastName, String middleName, Car car) {
+    private User(String username, String password, String email, String firstName, String lastName, String middleName, Car car) {
         this.username = username;
-        this.email = email;
         this.password = password;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.middleName = middleName;
         this.car = car;
+    }
+
+    public static User of(String username, String password, String email, String firstName, String lastName, String middleName, Car car) {
+        return new User(username, password, email, firstName, lastName, middleName, car);
     }
 }

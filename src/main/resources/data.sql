@@ -5,16 +5,16 @@ INSERT INTO cars (id, model, reg_number, color) VALUES (4, 'Nissan Almera', 'Е3
 INSERT INTO cars (id, model, reg_number, color) VALUES (5, 'Daewoo Nexia', 'О184СТ99', 'Зеленый');
 
 -- password = 'qwerqwer'
-INSERT INTO users (id, username, password, email, firstname)
-VALUES (1, 'driver1', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '1@mail.ru', 'Иван');
-INSERT INTO users (id, username, password, email, firstname)
-VALUES (2, 'driver2', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '2@mail.ru', 'Сергей');
-INSERT INTO users (id, username, password, email, firstname)
-VALUES (3, 'driver3', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '3@mail.ru', 'Геннадий');
-INSERT INTO users (id, username, password, email, firstname)
-VALUES (4, 'driver4', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '4@mail.ru', 'Евгений');
-INSERT INTO users (id, username, password, email, firstname)
-VALUES (5, 'driver5', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '5@mail.ru', 'Михаил');
+INSERT INTO users (id, username, password, email, firstname, car_id)
+VALUES (1, 'driver1', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '1@mail.ru', 'Иван', 1);
+INSERT INTO users (id, username, password, email, firstname, car_id)
+VALUES (2, 'driver2', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '2@mail.ru', 'Сергей', 2);
+INSERT INTO users (id, username, password, email, firstname, car_id)
+VALUES (3, 'driver3', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '3@mail.ru', 'Геннадий', 3);
+INSERT INTO users (id, username, password, email, firstname, car_id)
+VALUES (4, 'driver4', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '4@mail.ru', 'Евгений', 4);
+INSERT INTO users (id, username, password, email, firstname, car_id)
+VALUES (5, 'driver5', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '5@mail.ru', 'Михаил', 5);
 INSERT INTO users (id, username, password, email, firstname)
 VALUES (6, 'passenger1', '$2a$10$rVD6af.QLUcV2DtjkR.MuuSLMKg2tDBVfHcHfPIJ.RNxrM2dmqdE.', '6@mail.ru', 'Анна');
 INSERT INTO users (id, username, password, email, firstname)
@@ -76,3 +76,16 @@ INSERT INTO user_roles (user_id, role_id) VALUES (2, 3);
 INSERT INTO user_roles (user_id, role_id) VALUES (3, 3);
 INSERT INTO user_roles (user_id, role_id) VALUES (4, 3);
 INSERT INTO user_roles (user_id, role_id) VALUES (5, 3);
+
+INSERT INTO f_v_queue (id, number, number_passengers) VALUES (1, 1, 3);
+INSERT INTO f_v_queue (id, number, number_passengers) VALUES (2, 2, 0);
+INSERT INTO f_v_queue (id, number, number_passengers) VALUES (3, 3, 0);
+INSERT INTO f_v_queue (id, number, number_passengers) VALUES (4, 4, 0);
+INSERT INTO f_v_queue (id, number, number_passengers) VALUES (5, 5, 0);
+
+INSERT INTO drivers_in_f_v_queue (f_v_queue_id, driver_id) VALUES (1, 1);
+INSERT INTO drivers_in_f_v_queue (f_v_queue_id, driver_id) VALUES (2, 2);
+INSERT INTO drivers_in_f_v_queue (f_v_queue_id, driver_id) VALUES (3, 3);
+INSERT INTO drivers_in_f_v_queue (f_v_queue_id, driver_id) VALUES (4, 4);
+INSERT INTO drivers_in_f_v_queue (f_v_queue_id, driver_id) VALUES (5, 5);
+

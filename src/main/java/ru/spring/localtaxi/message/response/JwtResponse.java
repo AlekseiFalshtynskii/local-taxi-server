@@ -2,9 +2,7 @@ package ru.spring.localtaxi.message.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
+import ru.spring.localtaxi.domain.User;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +12,5 @@ public class JwtResponse {
 
     private String accessToken;
 
-    private String username;
-
-    private Collection<? extends GrantedAuthority> authorities;
+    private User user;
 }

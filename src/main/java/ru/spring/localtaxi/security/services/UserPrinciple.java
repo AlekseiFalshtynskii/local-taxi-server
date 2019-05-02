@@ -1,57 +1,42 @@
 package ru.spring.localtaxi.security.services;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.spring.localtaxi.domain.User;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
-@EqualsAndHashCode
 public class UserPrinciple implements UserDetails {
 
-    private static final long serialVersionUID = 1L;
+    @Getter
+    private User user;
 
-    private Long id;
-
-    private String name;
-
-    private String username;
-
-    private String email;
-
-    @JsonIgnore
-    private String password;
-
-    private Collection<? extends GrantedAuthority> authorities;
-
-    public UserPrinciple(Long id, String username, String email, String password,
-                         Collection<? extends GrantedAuthority> authorities) {
-        this.id = id;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.authorities = authorities;
+    private UserPrinciple(User user) {
+        this.user = user;
     }
 
-    public static UserPrinciple build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
+    public static UserPrinciple of(User user) {
+        return new UserPrinciple(user);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return user.getRoles().stream().map(role ->
                 new SimpleGrantedAuthority(role.getName().name())
         ).collect(Collectors.toList());
+    }
 
-        return new UserPrinciple(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
-                authorities
-        );
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getUsername();
     }
 
     @Override
