@@ -58,4 +58,8 @@ public class UserPrinciple implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    public void setUsername(String username) {
+        user.setUsername(username);
+    }
 }

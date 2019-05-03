@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 
 import javax.persistence.*;
-
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;

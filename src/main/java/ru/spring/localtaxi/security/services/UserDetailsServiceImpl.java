@@ -1,6 +1,7 @@
 package ru.spring.localtaxi.security.services;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,6 +10,7 @@ import ru.spring.localtaxi.domain.User;
 import ru.spring.localtaxi.repository.UserRepository;
 
 @Service
+@Data
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
