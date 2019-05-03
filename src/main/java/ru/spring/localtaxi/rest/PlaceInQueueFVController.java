@@ -18,39 +18,39 @@ public class PlaceInQueueFVController {
         return service.findAll();
     }
 
-    @GetMapping("/api/queue/f/v/driver/{driverId}")
-    public PlaceInQueueFV findByDriverId(@PathVariable Long driverId) {
+    @GetMapping("/api/queue/f/v/driver")
+    public PlaceInQueueFV findByDriverId(@RequestParam(name = "driverId") Long driverId) {
         return service.findByDriverId(driverId);
     }
 
-    @GetMapping("/api/queue/f/v/passenger/{passengerId}")
-    public PlaceInQueueFV findByPassengerId(@PathVariable Long passengerId) {
+    @GetMapping("/api/queue/f/v/passenger")
+    public PlaceInQueueFV findByPassengerId(@RequestParam(name = "passengerId") Long passengerId) {
         return service.findByPassengerId(passengerId);
     }
 
-    @PostMapping("/api/queue/f/v/driver/{driverId}")
-    public List<PlaceInQueueFV> addDriverInQueue(@PathVariable Long driverId) {
+    @PostMapping("/api/queue/f/v/driver")
+    public List<PlaceInQueueFV> addDriverInQueue(@RequestParam(name = "driverId") Long driverId) {
         return service.addDriverInQueue(driverId);
     }
 
-    @DeleteMapping("/api/queue/f/v/driver/{driverId}")
-    public List<PlaceInQueueFV> removeDriverFromQueue(@PathVariable Long driverId) {
+    @DeleteMapping("/api/queue/f/v/driver")
+    public List<PlaceInQueueFV> removeDriverFromQueue(@RequestParam(name = "driverId") Long driverId) {
         return service.removeDriverFromQueue(driverId);
     }
 
-    @PostMapping({
-            "/api/queue/f/v/{placeInQueueId}/passenger",
-            "/api/queue/f/v/{placeInQueueId}/passenger/{passengerId}"
-    })
-    public List<PlaceInQueueFV> addPassengerInQueue(@PathVariable Long placeInQueueId, @PathVariable(required = false) Long passengerId) {
+    @PostMapping({"/api/queue/f/v/{placeInQueueId}/passenger"})
+    public List<PlaceInQueueFV> addPassengerInQueue(
+            @PathVariable Long placeInQueueId,
+            @RequestParam(name = "passengerId", required = false) Long passengerId
+    ) {
         return service.addPassengerInQueue(placeInQueueId, passengerId);
     }
 
-    @DeleteMapping({
-            "/api/queue/f/v/{placeInQueueId}/passenger",
-            "/api/queue/f/v/{placeInQueueId}/passenger/{passengerId}"
-    })
-    public List<PlaceInQueueFV> removePassengerFromQueue(@PathVariable Long placeInQueueId, @PathVariable(required = false) Long passengerId) {
+    @DeleteMapping({"/api/queue/f/v/{placeInQueueId}/passenger"})
+    public List<PlaceInQueueFV> removePassengerFromQueue(
+            @PathVariable Long placeInQueueId,
+            @RequestParam(name = "passengerId", required = false) Long passengerId
+    ) {
         return service.removePassengerFromQueue(placeInQueueId, passengerId);
     }
 }
