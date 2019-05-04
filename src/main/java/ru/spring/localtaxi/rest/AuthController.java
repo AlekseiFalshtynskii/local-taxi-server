@@ -91,6 +91,7 @@ public class AuthController {
                     Role driverRole = roleRepository.findByName(ROLE_DRIVER)
                             .orElseThrow(() -> new RuntimeException("Роль \"Водитель\" не найдена"));
                     roles.add(driverRole);
+                    break;
                 case "passenger":
                     Role passengerRole = roleRepository.findByName(ROLE_PASSENGER)
                             .orElseThrow(() -> new RuntimeException("Роль \"Пассажир\" не найдена"));
