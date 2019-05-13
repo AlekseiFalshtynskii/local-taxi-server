@@ -2,6 +2,7 @@ package ru.spring.localtaxi.authserviceimpl.rest;
 
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AuthController {
   private final PasswordEncoder userPasswordEncoder;
 
   @PostMapping("/api/auth/signup")
-  public ResponseEntity<?> signup(@RequestBody SignUpForm signUpRequest) {
+  public ResponseEntity<String> signup(@Valid @RequestBody SignUpForm signUpRequest) {
     if (service.existsByUsername(signUpRequest.getUsername())) {
       return new ResponseEntity<>("Логин уже занят!", HttpStatus.BAD_REQUEST);
     }
@@ -53,6 +54,7 @@ public class AuthController {
         .collect(Collectors.toSet());
 
     user.setAuthorities(authorities);
-    return new ResponseEntity<>(service.save(user), HttpStatus.OK);
+    service.save(user);
+    return ResponseEntity.ok().build();
   }
 }

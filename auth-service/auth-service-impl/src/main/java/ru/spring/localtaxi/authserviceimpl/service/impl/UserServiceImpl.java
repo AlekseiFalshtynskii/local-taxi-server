@@ -1,6 +1,8 @@
 package ru.spring.localtaxi.authserviceimpl.service.impl;
 
+import javax.validation.ValidationException;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spring.localtaxi.authserviceimpl.domain.User;
@@ -15,6 +17,10 @@ public class UserServiceImpl implements UserService {
 
   private final PasswordEncoder userPasswordEncoder;
 
+  private User getCurrentUser() {
+    return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  }
+
   @Override
   public boolean existsByUsername(String username) {
     return repository.existsByUsername(username);
@@ -27,9 +33,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User findById(Long userId) {
-    return repository.findById(userId).orElseThrow(
-        () -> new RuntimeException("Пользователь не найден!")
-    );
+    return repository.findById(userId).orElse(null);
   }
 
   @Override
@@ -38,56 +42,46 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public User saveUsername(Long userId, String username) {
-    User user = repository.findByUsername(username).orElse(null);
-    if (user != null) {
-      throw new RuntimeException("Логин уже занят!");
+  public void saveUsername(String username) {
+    if (existsByUsername(username)) {
+      throw new ValidationException("Логин уже занят!");
     }
-    user = repository.findById(userId).orElseThrow(
-        () -> new RuntimeException("Пользователь не найден!")
-    );
+    User user = getCurrentUser();
     user.setUsername(username);
-    return repository.save(user);
+    save(user);
   }
 
   @Override
-  public void savePassword(Long userId, String oldPassword, String newPassword) {
-    User user = repository.findById(userId).orElseThrow(
-        () -> new RuntimeException("Пользователь не найден!")
-    );
+  public void savePassword(String oldPassword, String newPassword) {
+    User user = getCurrentUser();
     if (!userPasswordEncoder.matches(oldPassword, user.getPassword())) {
-      throw new RuntimeException("Пароль указан неверно!");
+      throw new ValidationException("Пароль указан неверно!");
     }
     user.setPassword(userPasswordEncoder.encode(newPassword));
-    repository.save(user);
+    save(user);
   }
 
   @Override
-  public User saveEmail(Long userId, String email) {
-    User user = repository.findByEmail(email).orElse(null);
-    if (user != null) {
-      throw new RuntimeException("Email уже занят!");
+  public void saveEmail(String email) {
+    if (existsByEmail(email)) {
+      throw new ValidationException("Email уже занят!");
     }
-    user = repository.findById(userId).orElseThrow(
-        () -> new RuntimeException("Пользователь не найден!")
-    );
+    User user = getCurrentUser();
     user.setEmail(email);
-    return repository.save(user);
+    save(user);
   }
 
   @Override
-  public User saveFIO(Long userId, String firstName, String lastName, String middleName) {
-    User user = repository.findById(userId).orElseThrow(
-        () -> new RuntimeException("Пользователь не найден!")
-    );
+  public void saveFIO(String firstName, String lastName, String middleName) {
+    User user = getCurrentUser();
     user.setFirstName(firstName);
     user.setLastName(lastName);
     user.setMiddleName(middleName);
-    return repository.save(user);
+    save(user);
   }
 
   @Override
-  public void deleteById(Long userId) {
-    repository.deleteById(userId);
+  public void deleteUser() {
+    repository.deleteById(getCurrentUser().getId());
   }
 }

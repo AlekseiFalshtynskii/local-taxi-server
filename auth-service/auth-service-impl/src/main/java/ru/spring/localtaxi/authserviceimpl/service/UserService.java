@@ -12,13 +12,13 @@ public interface UserService {
 
   User save(User user);
 
-  User saveUsername(Long userId, String username);
+  void saveUsername(String username);
 
-  void savePassword(Long userId, String oldPassword, String newPassword);
+  void savePassword(String oldPassword, String newPassword);
 
-  void deleteById(Long userId);
+  void deleteUser();
 
-  User saveEmail(Long userId, String email);
+  void saveEmail(String email);
 
-  User saveFIO(Long userId, String firstName, String lastName, String middleName);
+  void saveFIO(String firstName, String lastName, String middleName);
 }
