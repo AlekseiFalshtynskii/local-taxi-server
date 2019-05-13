@@ -22,9 +22,10 @@ public class Authority implements GrantedAuthority {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "id")
   private Long id;
 
-  @Column(name = "authority")
+  @Column(name = "authority", nullable = false)
   private String authority;
 
   public static Authority of(Authorities authority) {

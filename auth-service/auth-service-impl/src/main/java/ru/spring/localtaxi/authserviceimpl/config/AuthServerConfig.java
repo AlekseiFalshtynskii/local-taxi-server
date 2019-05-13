@@ -10,11 +10,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
+import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
 
+@EnableAuthorizationServer
 @Configuration
 @AllArgsConstructor
 public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
@@ -32,26 +34,18 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 
   @Bean("clientPasswordEncoder")
   public PasswordEncoder clientPasswordEncoder() {
-    return new BCryptPasswordEncoder(8);
+    return new BCryptPasswordEncoder(4);
   }
 
   @Override
   public void configure(AuthorizationServerSecurityConfigurer cfg) throws Exception {
-    cfg.checkTokenAccess("permitAll")
+    cfg.checkTokenAccess("permitAll()")
         .passwordEncoder(clientPasswordEncoder());
   }
 
   @Override
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-    clients.jdbc(dataSource)
-        .withClient("localtaxi")
-        .secret(clientPasswordEncoder().encode("localtaxi@123"))
-        .authorizedGrantTypes("password", "refresh_token")
-        .scopes("read", "write")
-        .accessTokenValiditySeconds(86400)
-        .refreshTokenValiditySeconds(2592000)
-        .and()
-        .build();
+    clients.jdbc(dataSource);
   }
 
   @Override

@@ -1,0 +1,218 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+  <changeSet id="13052019_create_users" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="users"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы пользователей</comment>
+
+    <createTable tableName="users">
+      <column name="id" type="bigint" autoIncrement="true">>
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="username" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="password" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="enabled" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="email" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="firstname" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="lastname" type="varchar(255)"/>
+
+      <column name="middlename" type="varchar(255)"/>
+
+      <column name="car_id" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_create_authorities" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="authorities"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы прав</comment>
+
+    <createTable tableName="authorities">
+      <column name="id" type="bigint" autoIncrement="true">>
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="authority" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="user_id" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_create_cars" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="cars"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы авто</comment>
+
+    <createTable tableName="cars">
+      <column name="id" type="bigint" autoIncrement="true">>
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="model" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="reg_number" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="color" type="varchar(255)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_create_uk_users_username" author="Aleksei_Falshtynskii">
+    <comment>создание uk username</comment>
+
+    <addUniqueConstraint tableName="users" columnNames="username"/>
+  </changeSet>
+
+  <changeSet id="13052019_create_uk_users_email" author="Aleksei_Falshtynskii">
+    <comment>создание uk email</comment>
+
+    <addUniqueConstraint tableName="users" columnNames="email"/>
+  </changeSet>
+
+  <changeSet id="13052019_create_fk_users_car_id" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <foreignKeyConstraintExists foreignKeyName="fk_users_car_id"/>
+      </not>
+    </preConditions>
+
+    <comment>создание fk авто</comment>
+
+    <addForeignKeyConstraint constraintName="fk_users_car_id" baseTableName="users"
+      baseColumnNames="car_id" referencedTableName="cars" referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="13052019_create_fk_authorities_user_id" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <foreignKeyConstraintExists foreignKeyName="fk_authorities_user_id"/>
+      </not>
+    </preConditions>
+
+    <comment>создание fk прав</comment>
+
+    <addForeignKeyConstraint constraintName="fk_authorities_user_id" baseTableName="authorities"
+      baseColumnNames="user_id" referencedTableName="users" referencedColumnNames="id"/>
+  </changeSet>
+
+  <changeSet id="13052019_create_oauth_client_details" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="oauth_client_details"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы клиентов</comment>
+
+    <createTable tableName="oauth_client_details">
+      <column name="client_id" type="varchar(256)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="resource_ids" type="varchar(256)"/>
+      <column name="client_secret" type="varchar(256)"/>
+      <column name="scope" type="varchar(256)"/>
+      <column name="authorized_grant_types" type="varchar(256)"/>
+      <column name="web_server_redirect_uri" type="varchar(256)"/>
+      <column name="authorities" type="varchar(256)"/>
+      <column name="access_token_validity" type="int"/>
+      <column name="refresh_token_validity" type="int"/>
+      <column name="additional_information" type="varchar(4096)"/>
+      <column name="autoapprove" type="varchar(256)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_create_oauth_access_token" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="oauth_access_token"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы токенов доступа</comment>
+
+    <createTable tableName="oauth_access_token">
+      <column name="token_id" type="varchar(256)"/>
+      <column name="token" type="longvarbinary"/>
+      <column name="authentication_id" type="varchar(256)">
+        <constraints primaryKey="true"/>
+      </column>
+      <column name="user_name" type="varchar(256)"/>
+      <column name="client_id" type="varchar(256)"/>
+      <column name="authentication" type="longvarbinary"/>
+      <column name="refresh_token" type="varchar(256)"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_create_oauth_refresh_token" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="oauth_refresh_token"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы токенов обновления</comment>
+
+    <createTable tableName="oauth_refresh_token">
+      <column name="token_id" type="varchar(256)"/>
+      <column name="token" type="longvarbinary"/>
+      <column name="authentication" type="longvarbinary"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="13052019_insert_client" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <sqlCheck expectedResult="0">select count(*) from oauth_client_details where
+        client_id='localtaxi'
+      </sqlCheck>
+    </preConditions>
+
+    <insert tableName="oauth_client_details">
+      <column name="client_id" value="localtaxi"/>
+      <column name="client_secret"
+        value="$2a$04$dKTY94Ln2EBN5qxzhRZK9uToiP2kInYKwL8rA3uUDv5KBqkUzLkSO"/>
+      <column name="resource_ids" value="localtaxi"/>
+      <column name="scope" value="read,write"/>
+      <column name="authorized_grant_types" value="password,refresh_token"/>
+      <column name="access_token_validity" value="86400"/>
+      <column name="refresh_token_validity" value="2592000"/>
+    </insert>
+  </changeSet>
+</databaseChangeLog>

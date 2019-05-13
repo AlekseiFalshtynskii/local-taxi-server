@@ -31,6 +31,7 @@ public class User implements UserDetails {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   @NotBlank

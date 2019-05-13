@@ -2,6 +2,7 @@ package ru.spring.localtaxi.authserviceimpl.domain;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
+import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,10 +18,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Car {
+public class Car implements Serializable {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
+  @Column(name = "id")
   private Long id;
 
   @NotBlank
@@ -35,13 +37,7 @@ public class Car {
   @Column(name = "color", nullable = false)
   private String color;
 
-  private Car(String model, String regNumber, String color) {
-    this.model = model;
-    this.regNumber = regNumber;
-    this.color = color;
-  }
-
   public static Car of(String model, String regNumber, String color) {
-    return new Car(model, regNumber, color);
+    return new Car(null, model, regNumber, color);
   }
 }

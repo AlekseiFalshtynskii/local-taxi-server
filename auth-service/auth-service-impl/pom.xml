@@ -19,6 +19,11 @@
       <version>${auth-service.version}</version>
     </dependency>
     <dependency>
+      <groupId>ru.spring.localtaxi</groupId>
+      <artifactId>auth-service-db</artifactId>
+      <version>${auth-service.version}</version>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
     </dependency>

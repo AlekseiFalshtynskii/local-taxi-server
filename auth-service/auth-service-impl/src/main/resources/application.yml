@@ -7,6 +7,10 @@ spring:
   h2:
     console:
       enabled: true
+  jpa:
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/database_changelog.xml
 
 eureka:
   client:
