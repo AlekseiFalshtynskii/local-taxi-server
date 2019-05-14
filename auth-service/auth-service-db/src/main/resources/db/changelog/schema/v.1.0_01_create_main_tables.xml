@@ -210,7 +210,8 @@
         value="$2a$04$dKTY94Ln2EBN5qxzhRZK9uToiP2kInYKwL8rA3uUDv5KBqkUzLkSO"/>
       <column name="resource_ids" value="localtaxi"/>
       <column name="scope" value="read,write"/>
-      <column name="authorized_grant_types" value="password,refresh_token"/>
+      <column name="authorized_grant_types"
+        value="authorization_code,check_token,refresh_token,password"/>
       <column name="access_token_validity" value="86400"/>
       <column name="refresh_token_validity" value="2592000"/>
     </insert>

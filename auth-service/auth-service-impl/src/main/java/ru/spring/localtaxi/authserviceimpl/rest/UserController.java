@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spring.localtaxi.authserviceapi.api.UserClient;
+import ru.spring.localtaxi.authserviceapi.api.UserApi;
 import ru.spring.localtaxi.authserviceapi.dto.AuthorityDTO;
 import ru.spring.localtaxi.authserviceapi.dto.CarDTO;
 import ru.spring.localtaxi.authserviceapi.dto.EmailDTO;
@@ -19,7 +19,7 @@ import ru.spring.localtaxi.authserviceimpl.service.UserService;
 
 @RestController
 @AllArgsConstructor
-public class UserController implements UserClient {
+public class UserController implements UserApi {
 
   private final UserService service;
 
