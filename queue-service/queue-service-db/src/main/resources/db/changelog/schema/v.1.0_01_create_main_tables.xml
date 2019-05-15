@@ -1,0 +1,62 @@
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+  <changeSet id="12052019_create_queue" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="queue"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы очереди</comment>
+
+    <createTable tableName="queue">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="number" type="integer">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="driver_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="number_passengers" type="integer"/>
+
+      <column name="version" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="12052019_create_place_in_queue_passenger_ids" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="place_in_queue_passenger_ids"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы айдишников пассажиров</comment>
+
+    <createTable tableName="place_in_queue_passenger_ids">
+      <column name="place_in_queue_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="passenger_id" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="12052019_add_fk" author="Aleksei_Falshtynskii">
+    <addForeignKeyConstraint
+      baseColumnNames="place_in_queue_id"
+      baseTableName="place_in_queue_passenger_ids"
+      constraintName="fk_passenger_ids"
+      onDelete="CASCADE"
+      onUpdate="CASCADE"
+      referencedColumnNames="id"
+      referencedTableName="queue"/>
+  </changeSet>
+</databaseChangeLog>
