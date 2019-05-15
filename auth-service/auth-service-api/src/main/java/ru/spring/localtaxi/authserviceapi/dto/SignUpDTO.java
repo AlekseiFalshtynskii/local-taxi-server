@@ -1,4 +1,4 @@
-package ru.spring.localtaxi.authserviceimpl.dto;
+package ru.spring.localtaxi.authserviceapi.dto;
 
 import java.util.Set;
 import javax.validation.constraints.Email;
@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
-public class SignUpForm {
+public class SignUpDTO {
 
   @NotBlank
   private String username;

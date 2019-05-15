@@ -2,31 +2,29 @@ package ru.spring.localtaxi.authserviceimpl.rest;
 
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.spring.localtaxi.authserviceapi.api.AuthApi;
+import ru.spring.localtaxi.authserviceapi.dto.SignUpDTO;
 import ru.spring.localtaxi.authserviceimpl.domain.Authority;
 import ru.spring.localtaxi.authserviceimpl.domain.Car;
 import ru.spring.localtaxi.authserviceimpl.domain.User;
-import ru.spring.localtaxi.authserviceimpl.dto.SignUpForm;
 import ru.spring.localtaxi.authserviceimpl.enums.Authorities;
 import ru.spring.localtaxi.authserviceimpl.service.UserService;
 
 @RestController
 @AllArgsConstructor
-public class AuthController {
+public class AuthController implements AuthApi {
 
   private final UserService service;
 
   private final PasswordEncoder userPasswordEncoder;
 
-  @PostMapping("/api/auth/signup")
-  public ResponseEntity<String> signup(@Valid @RequestBody SignUpForm signUpRequest) {
+  @Override
+  public ResponseEntity<String> signup(SignUpDTO signUpRequest) {
     if (service.existsByUsername(signUpRequest.getUsername())) {
       return new ResponseEntity<>("Логин уже занят!", HttpStatus.BAD_REQUEST);
     }

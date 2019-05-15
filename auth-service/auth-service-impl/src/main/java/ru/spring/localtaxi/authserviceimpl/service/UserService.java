@@ -1,5 +1,6 @@
 package ru.spring.localtaxi.authserviceimpl.service;
 
+import ru.spring.localtaxi.authserviceapi.dto.UserDTO;
 import ru.spring.localtaxi.authserviceimpl.domain.User;
 
 public interface UserService {
@@ -8,9 +9,11 @@ public interface UserService {
 
   boolean existsByEmail(String email);
 
-  User findById(Long userId);
+  UserDTO getCurrentUser();
 
-  User save(User user);
+  UserDTO findById(Long userId);
+
+  void save(User user);
 
   void saveUsername(String username);
 

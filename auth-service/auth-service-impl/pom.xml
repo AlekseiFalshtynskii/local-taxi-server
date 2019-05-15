@@ -20,6 +20,11 @@
     </dependency>
     <dependency>
       <groupId>ru.spring.localtaxi</groupId>
+      <artifactId>auth-service-api</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>ru.spring.localtaxi</groupId>
       <artifactId>auth-service-db</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
