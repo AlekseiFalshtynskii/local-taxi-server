@@ -9,10 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 import ru.spring.localtaxi.authserviceapi.api.AuthApi;
 import ru.spring.localtaxi.authserviceapi.dto.SignUpDTO;
+import ru.spring.localtaxi.authserviceapi.enums.Authorities;
 import ru.spring.localtaxi.authserviceimpl.domain.Authority;
 import ru.spring.localtaxi.authserviceimpl.domain.Car;
 import ru.spring.localtaxi.authserviceimpl.domain.User;
-import ru.spring.localtaxi.authserviceimpl.enums.Authorities;
 import ru.spring.localtaxi.authserviceimpl.service.UserService;
 
 @RestController

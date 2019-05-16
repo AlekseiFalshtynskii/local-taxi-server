@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ru.spring.localtaxi.authserviceapi.enums.Authorities;
 
 @Data
 @AllArgsConstructor
@@ -46,5 +47,17 @@ public class UserDTO {
       String middleName, CarDTO car) {
     return new UserDTO(id, username, password, enabled, authorities, email, firstName, lastName,
         middleName, car);
+  }
+
+  public boolean isDriver() {
+    return getAuthorities().stream()
+        .filter(authority -> Authorities.AUTHORITY_DRIVER.name().equals(authority.getAuthority()))
+        .count() == 1;
+  }
+
+  public boolean isPassenger() {
+    return getAuthorities().stream()
+        .filter(authority -> Authorities.AUTHORITY_PASSENGER.name().equals(authority.getAuthority()))
+        .count() == 1;
   }
 }

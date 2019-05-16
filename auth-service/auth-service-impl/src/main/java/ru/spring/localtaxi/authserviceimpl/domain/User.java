@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -71,21 +72,13 @@ public class User implements UserDetails {
   @LazyCollection(value = FALSE)
   private Car car;
 
-  private User(String username, String password, String email, String firstName, String lastName,
-      String middleName, Car car) {
-    this.username = username;
-    this.password = password;
-    this.enabled = true;
-    this.email = email;
-    this.firstName = firstName;
-    this.lastName = lastName;
-    this.middleName = middleName;
-    this.car = car;
-  }
+  @Version
+  private Long version;
 
   public static User of(String username, String password, String email, String firstName,
       String lastName, String middleName, Car car) {
-    return new User(username, password, email, firstName, lastName, middleName, car);
+    return new User(null, username, password, true, null, email, firstName, lastName, middleName,
+        car, null);
   }
 
   @Override

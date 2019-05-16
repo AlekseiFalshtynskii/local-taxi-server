@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Version;
 import javax.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,7 +38,10 @@ public class Car implements Serializable {
   @Column(name = "color", nullable = false)
   private String color;
 
+  @Version
+  private Long version;
+
   public static Car of(String model, String regNumber, String color) {
-    return new Car(null, model, regNumber, color);
+    return new Car(null, model, regNumber, color, null);
   }
 }

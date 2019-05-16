@@ -13,7 +13,7 @@
     <comment>создание таблицы пользователей</comment>
 
     <createTable tableName="users">
-      <column name="id" type="bigint" autoIncrement="true">>
+      <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
@@ -42,6 +42,8 @@
       <column name="middlename" type="varchar(255)"/>
 
       <column name="car_id" type="bigint"/>
+
+      <column name="version" type="bigint"/>
     </createTable>
   </changeSet>
 
@@ -55,7 +57,7 @@
     <comment>создание таблицы прав</comment>
 
     <createTable tableName="authorities">
-      <column name="id" type="bigint" autoIncrement="true">>
+      <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
@@ -64,6 +66,8 @@
       </column>
 
       <column name="user_id" type="bigint"/>
+
+      <column name="version" type="bigint"/>
     </createTable>
   </changeSet>
 
@@ -77,7 +81,7 @@
     <comment>создание таблицы авто</comment>
 
     <createTable tableName="cars">
-      <column name="id" type="bigint" autoIncrement="true">>
+      <column name="id" type="bigint" autoIncrement="true">
         <constraints primaryKey="true" nullable="false"/>
       </column>
 
@@ -92,6 +96,8 @@
       <column name="color" type="varchar(255)">
         <constraints nullable="false"/>
       </column>
+
+      <column name="version" type="bigint"/>
     </createTable>
   </changeSet>
 
