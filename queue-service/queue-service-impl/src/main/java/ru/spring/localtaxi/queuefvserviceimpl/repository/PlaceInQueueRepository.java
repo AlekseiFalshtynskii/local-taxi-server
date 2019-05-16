@@ -6,11 +6,13 @@ import ru.spring.localtaxi.queuefvserviceimpl.domain.PlaceInQueue;
 
 public interface PlaceInQueueRepository extends JpaRepository<PlaceInQueue, Long> {
 
-  PlaceInQueue findFirstByOrderByNumberDesc();
+  List<PlaceInQueue> findAllByEndDTIsNullOrderByNumberAsc();
 
-  PlaceInQueue findByDriverId(Long id);
+  PlaceInQueue findFirstByEndDTIsNullOrderByNumberDesc();
 
-  PlaceInQueue findByPassengerIdsContains(Long id);
+  PlaceInQueue findByDriverIdAndEndDTIsNull(Long id);
 
-  List<PlaceInQueue> findAllByNumberIsAfter(int number);
+  PlaceInQueue findByPassengerIdsContainsAndEndDTIsNull(Long id);
+
+  List<PlaceInQueue> findAllByNumberIsAfterAndEndDTIsNull(int number);
 }

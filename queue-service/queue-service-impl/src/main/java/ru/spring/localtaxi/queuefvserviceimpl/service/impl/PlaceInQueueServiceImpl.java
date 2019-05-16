@@ -1,5 +1,6 @@
 package ru.spring.localtaxi.queuefvserviceimpl.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -25,27 +26,29 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
 
   @Override
   public List<PlaceInQueueDTO> findAll() {
-    return repository.findAll().stream().map(this::fromPlaceInQueue).collect(Collectors.toList());
+    return repository.findAllByEndDTIsNullOrderByNumberAsc().stream().map(this::fromEntity)
+        .collect(Collectors.toList());
   }
 
   @Override
   public PlaceInQueueDTO findByDriver() {
-    return fromPlaceInQueue(repository.findByDriverId(userClient.getCurrentUser().getId()));
+    return fromEntity(repository.findByDriverIdAndEndDTIsNull(userClient.getCurrentUser().getId()));
   }
 
   @Override
   public PlaceInQueueDTO findByPassenger() {
-    return fromPlaceInQueue(
-        repository.findByPassengerIdsContains(userClient.getCurrentUser().getId()));
+    return fromEntity(
+        repository.findByPassengerIdsContainsAndEndDTIsNull(userClient.getCurrentUser().getId()));
   }
 
   @Transactional
   @Override
   public List<PlaceInQueueDTO> addDriverInQueue() {
     UserDTO driver = userClient.getCurrentUser();
-    PlaceInQueue lastPlaceInQueue = repository.findFirstByOrderByNumberDesc();
+    PlaceInQueue lastPlaceInQueue = repository.findFirstByEndDTIsNullOrderByNumberDesc();
     int number = lastPlaceInQueue == null ? 1 : lastPlaceInQueue.getNumber() + 1;
-    repository.save(PlaceInQueue.of(number, driver.getId(), 0));
+    repository.save(PlaceInQueue.of(number, driver.getId(), 0, LocalDateTime.now(),
+        number == 1 ? LocalDateTime.now() : null, null));
     return findAll();
   }
 
@@ -53,26 +56,37 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
   @Override
   public List<PlaceInQueueDTO> removeDriverFromQueue() {
     UserDTO driver = userClient.getCurrentUser();
-    PlaceInQueue placeInQueue = repository.findByDriverId(driver.getId());
+    PlaceInQueue placeInQueue = repository.findByDriverIdAndEndDTIsNull(driver.getId());
     if (placeInQueue != null) {
       List<PlaceInQueue> placeInQueueList = repository
-          .findAllByNumberIsAfter(placeInQueue.getNumber());
-      placeInQueueList.forEach(p -> p.setNumber(p.getNumber() - 1));
+          .findAllByNumberIsAfterAndEndDTIsNull(placeInQueue.getNumber());
+      placeInQueueList.forEach(p -> {
+        p.setNumber(p.getNumber() - 1);
+        if (p.getNumber() == 1) {
+          p.setStartFirstDT(LocalDateTime.now());
+        }
+      });
+      placeInQueue.setEndDT(LocalDateTime.now());
+      repository.save(placeInQueue);
       repository.saveAll(placeInQueueList);
-      repository.delete(placeInQueue);
     }
     return findAll();
   }
 
   @Transactional
   @Override
-  public List<PlaceInQueueDTO> addPassengerInQueue(Long piqId, Long passengerId) {
-    PlaceInQueue placeInQueue = repository.findById(piqId).orElse(null);
+  public List<PlaceInQueueDTO> addPassengerInQueue(Long piqId) {
+    UserDTO user = userClient.getCurrentUser();
+    PlaceInQueue placeInQueue;
+    if (user.isDriver()) {
+      placeInQueue = repository.findByDriverIdAndEndDTIsNull(user.getId());
+    } else {
+      placeInQueue = repository.findById(piqId).orElse(null);
+    }
     if (placeInQueue != null && placeInQueue.getNumberPassengers() < 4) {
-      if (passengerId != null) {
-        UserDTO passenger = userClient.getUserById(passengerId);
-        if (!placeInQueue.getPassengerIds().contains(passenger.getId())) {
-          placeInQueue.getPassengerIds().add(passenger.getId());
+      if (user.isPassenger()) {
+        if (!placeInQueue.getPassengerIds().contains(user.getId())) {
+          placeInQueue.getPassengerIds().add(user.getId());
         }
       }
       placeInQueue.setNumberPassengers(placeInQueue.getNumberPassengers() + 1);
@@ -83,12 +97,19 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
 
   @Transactional
   @Override
-  public List<PlaceInQueueDTO> removePassengerFromQueue(Long piqId, Long passengerId) {
-    PlaceInQueue placeInQueue = repository.findById(piqId).orElse(null);
+  public List<PlaceInQueueDTO> removePassengerFromQueue(Long passengerId) {
+    UserDTO user = userClient.getCurrentUser();
+    PlaceInQueue placeInQueue;
+    if (user.isDriver()) {
+      placeInQueue = repository.findByDriverIdAndEndDTIsNull(user.getId());
+    } else {
+      placeInQueue = repository.findByPassengerIdsContainsAndEndDTIsNull(user.getId());
+    }
     if (placeInQueue != null && placeInQueue.getNumberPassengers() > 0) {
       if (passengerId != null) {
-        UserDTO passenger = userClient.getUserById(passengerId);
-        placeInQueue.getPassengerIds().remove(passenger.getId());
+        placeInQueue.getPassengerIds().remove(passengerId);
+      } else if (user.isPassenger()) {
+        placeInQueue.getPassengerIds().remove(user.getId());
       }
       placeInQueue.setNumberPassengers(placeInQueue.getNumberPassengers() - 1);
       repository.save(placeInQueue);
@@ -96,7 +117,7 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
     return findAll();
   }
 
-  private PlaceInQueueDTO fromPlaceInQueue(PlaceInQueue placeInQueue) {
+  private PlaceInQueueDTO fromEntity(PlaceInQueue placeInQueue) {
     if (placeInQueue != null) {
       UserDTO driver = userClient.getUserById(placeInQueue.getDriverId());
       Set<UserDTO> passengers = new HashSet<>();
@@ -105,7 +126,8 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
             .forEach(passengers::add);
       }
       return PlaceInQueueDTO.of(placeInQueue.getId(), placeInQueue.getNumber(), driver, passengers,
-          placeInQueue.getNumberPassengers());
+          placeInQueue.getNumberPassengers(), placeInQueue.getStartDT(),
+          placeInQueue.getStartFirstDT(), placeInQueue.getEndDT());
     }
     return null;
   }

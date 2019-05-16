@@ -26,13 +26,11 @@ public interface PlaceInQueueApi {
 
   @PostMapping({"/api/queue/passenger"})
   List<PlaceInQueueDTO> addPassengerInQueue(
-      @RequestParam(name = "piqId") Long piqId,
-      @RequestParam(name = "passengerId", required = false) Long passengerId
+      @RequestParam(name = "piqId", required = false) Long piqId
   );
 
   @DeleteMapping({"/api/queue/passenger"})
   List<PlaceInQueueDTO> removePassengerFromQueue(
-      @RequestParam(name = "piqId") Long piqId,
       @RequestParam(name = "passengerId", required = false) Long passengerId
   );
 }

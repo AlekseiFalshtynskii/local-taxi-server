@@ -11,13 +11,10 @@ import ru.spring.localtaxi.authserviceapi.dto.UserDTO;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlaceInQueueDTO {
+public class TripDTO {
 
   @NotNull
   private Long id;
-
-  @NotNull
-  private int number;
 
   @NotNull
   private UserDTO driver;
@@ -27,16 +24,13 @@ public class PlaceInQueueDTO {
   @NotNull
   private int numberPassengers;
 
+  @NotNull
   private LocalDateTime startDT;
-
-  private LocalDateTime startFirstDT;
 
   private LocalDateTime endDT;
 
-  public static PlaceInQueueDTO of(Long id, int number, UserDTO driver, Set<UserDTO> passengers,
-      int numberPassengers, LocalDateTime startDT, LocalDateTime startFirstDT,
-      LocalDateTime endDT) {
-    return new PlaceInQueueDTO(id, number, driver, passengers, numberPassengers, startDT,
-        startFirstDT, endDT);
+  public static TripDTO of(Long id, UserDTO driver, Set<UserDTO> passengers, int numberPassengers,
+      LocalDateTime startDT, LocalDateTime endDT) {
+    return new TripDTO(id, driver, passengers, numberPassengers, startDT, endDT);
   }
 }

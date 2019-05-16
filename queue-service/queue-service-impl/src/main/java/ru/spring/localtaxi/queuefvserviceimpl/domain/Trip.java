@@ -18,18 +18,15 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.LazyCollection;
 
 @Entity
-@Table(name = "queue")
+@Table(name = "trips")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PlaceInQueue {
+public class Trip {
 
   @Id
   @GeneratedValue(strategy = IDENTITY)
   private Long id;
-
-  @Column(name = "number", nullable = false)
-  private int number;
 
   @Column(name = "driver_id", nullable = false)
   private Long driverId;
@@ -42,11 +39,8 @@ public class PlaceInQueue {
   @Column(name = "number_passengers")
   private int numberPassengers;
 
-  @Column(name = "start_dt")
+  @Column(name = "start_dt", nullable = false)
   private LocalDateTime startDT;
-
-  @Column(name = "start_first_dt")
-  private LocalDateTime startFirstDT;
 
   @Column(name = "end_dt")
   private LocalDateTime endDT;
@@ -54,9 +48,8 @@ public class PlaceInQueue {
   @Version
   private Long version;
 
-  public static PlaceInQueue of(int number, Long driverId, int numberPassengers,
-      LocalDateTime startDT, LocalDateTime startFirstDT, LocalDateTime endDT) {
-    return new PlaceInQueue(null, number, driverId, null, numberPassengers, startDT, startFirstDT,
-        endDT, null);
+  public static Trip of(Long driverId, Set<Long> passengerIds, int numberPassengers,
+      LocalDateTime startDT, LocalDateTime endDT) {
+    return new Trip(null, driverId, passengerIds, numberPassengers, startDT, endDT, null);
   }
 }

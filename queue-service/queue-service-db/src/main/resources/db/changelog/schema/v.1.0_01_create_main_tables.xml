@@ -27,6 +27,12 @@
 
       <column name="number_passengers" type="integer"/>
 
+      <column name="start_dt" type="timestamp"/>
+
+      <column name="start_first_dt" type="timestamp"/>
+
+      <column name="end_dt" type="timestamp"/>
+
       <column name="version" type="bigint"/>
     </createTable>
   </changeSet>
@@ -53,10 +59,69 @@
     <addForeignKeyConstraint
       baseColumnNames="place_in_queue_id"
       baseTableName="place_in_queue_passenger_ids"
-      constraintName="fk_passenger_ids"
+      constraintName="fk_place_in_queue_passenger_ids"
       onDelete="CASCADE"
       onUpdate="CASCADE"
       referencedColumnNames="id"
       referencedTableName="queue"/>
+  </changeSet>
+
+  <changeSet id="16052019_create_trips" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="trips"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы поездок</comment>
+
+    <createTable tableName="trips">
+      <column name="id" type="bigint" autoIncrement="true">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="driver_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="number_passengers" type="integer"/>
+
+      <column name="start_dt" type="timestamp">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="end_dt" type="timestamp"/>
+
+      <column name="version" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="16052019_create_trip_passenger_ids" author="Aleksei_Falshtynskii">
+    <preConditions>
+      <not>
+        <tableExists tableName="trip_passenger_ids"/>
+      </not>
+    </preConditions>
+
+    <comment>создание таблицы айдишников пассажиров</comment>
+
+    <createTable tableName="trip_passenger_ids">
+      <column name="trip_id" type="bigint">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="passenger_id" type="bigint"/>
+    </createTable>
+  </changeSet>
+
+  <changeSet id="16052019_add_fk" author="Aleksei_Falshtynskii">
+    <addForeignKeyConstraint
+      baseColumnNames="trip_id"
+      baseTableName="trip_passenger_ids"
+      constraintName="fk_trip_passenger_ids"
+      onDelete="CASCADE"
+      onUpdate="CASCADE"
+      referencedColumnNames="id"
+      referencedTableName="trips"/>
   </changeSet>
 </databaseChangeLog>

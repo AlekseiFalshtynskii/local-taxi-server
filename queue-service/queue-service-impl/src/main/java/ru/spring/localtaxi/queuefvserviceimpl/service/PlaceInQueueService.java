@@ -15,7 +15,7 @@ public interface PlaceInQueueService {
 
   List<PlaceInQueueDTO> removeDriverFromQueue();
 
-  List<PlaceInQueueDTO> addPassengerInQueue(Long piqId, Long passengerId);
+  List<PlaceInQueueDTO> addPassengerInQueue(Long piqId);
 
-  List<PlaceInQueueDTO> removePassengerFromQueue(Long piqId, Long passengerId);
+  List<PlaceInQueueDTO> removePassengerFromQueue(Long passengerId);
 }

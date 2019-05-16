@@ -39,12 +39,12 @@ public class PlaceInQueueController implements PlaceInQueueApi {
   }
 
   @Override
-  public List<PlaceInQueueDTO> addPassengerInQueue(Long piqId, Long passengerId) {
-    return service.addPassengerInQueue(piqId, passengerId);
+  public List<PlaceInQueueDTO> addPassengerInQueue(Long piqId) {
+    return service.addPassengerInQueue(piqId);
   }
 
   @Override
-  public List<PlaceInQueueDTO> removePassengerFromQueue(Long piqId, Long passengerId) {
-    return service.removePassengerFromQueue(piqId, passengerId);
+  public List<PlaceInQueueDTO> removePassengerFromQueue(Long passengerId) {
+    return service.removePassengerFromQueue(passengerId);
   }
 }
