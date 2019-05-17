@@ -32,7 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .authorizeRequests()
         .antMatchers("/h2-console/**").permitAll()
         .antMatchers("/api/auth/**").permitAll()
-        .antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+        .antMatchers(HttpMethod.GET, "/api/users/{id}").permitAll()
         .anyRequest().authenticated();
   }
 

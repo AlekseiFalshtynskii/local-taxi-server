@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.spring.localtaxi.authserviceapi.client.UserClient;
+import ru.spring.localtaxi.authserviceapi.client.UserUnauthClient;
 import ru.spring.localtaxi.authserviceapi.dto.UserDTO;
 import ru.spring.localtaxi.queuefvserviceapi.dto.PlaceInQueueDTO;
 import ru.spring.localtaxi.queuefvserviceimpl.domain.PlaceInQueue;
@@ -21,6 +22,8 @@ import ru.spring.localtaxi.queuefvserviceimpl.service.PlaceInQueueService;
 public class PlaceInQueueServiceImpl implements PlaceInQueueService {
 
   private final PlaceInQueueRepository repository;
+
+  private final UserUnauthClient userUnauthClient;
 
   private final UserClient userClient;
 
@@ -119,10 +122,10 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
 
   private PlaceInQueueDTO fromEntity(PlaceInQueue placeInQueue) {
     if (placeInQueue != null) {
-      UserDTO driver = userClient.getUserById(placeInQueue.getDriverId());
+      UserDTO driver = userUnauthClient.getUserById(placeInQueue.getDriverId());
       Set<UserDTO> passengers = new HashSet<>();
       if (!Objects.isNull(placeInQueue.getPassengerIds())) {
-        placeInQueue.getPassengerIds().stream().map(userClient::getUserById)
+        placeInQueue.getPassengerIds().stream().map(userUnauthClient::getUserById)
             .forEach(passengers::add);
       }
       return PlaceInQueueDTO.of(placeInQueue.getId(), placeInQueue.getNumber(), driver, passengers,
