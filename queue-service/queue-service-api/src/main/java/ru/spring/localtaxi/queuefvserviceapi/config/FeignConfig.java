@@ -9,7 +9,7 @@ import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
 
-public class FeignConfiguration {
+public class FeignConfig {
 
   @Value("${security.oauth2.client.access-token-uri}")
   private String accessTokenUri;

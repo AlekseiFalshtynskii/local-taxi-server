@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import ru.spring.localtaxi.authserviceapi.client.UserClient;
 
 @EnableDiscoveryClient
-@EnableFeignClients(basePackageClasses = UserClient.class)
+@EnableFeignClients(basePackages = "ru.spring.localtaxi")
 @SpringBootApplication
 public class QueueServiceImplApplication {
 
