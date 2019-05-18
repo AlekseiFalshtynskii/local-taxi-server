@@ -34,10 +34,10 @@ public class TripServiceImpl implements TripService {
   @Override
   public TripDTO start() {
     Directions direction = Directions.FV;
-    PlaceInQueueDTO placeInQueue = placeInQueueFVClient.findByDriver();
+    PlaceInQueueDTO placeInQueue = placeInQueueFVClient.getCurrent();
     if (placeInQueue == null) {
       direction = Directions.VF;
-      placeInQueue = placeInQueueVFClient.findByDriver();
+      placeInQueue = placeInQueueVFClient.getCurrent();
     }
     Trip trip = Trip.of(direction.getName(), placeInQueue.getDriver().getId(),
         placeInQueue.getPassengers().stream().map(UserDTO::getId).collect(Collectors.toSet()),

@@ -14,18 +14,13 @@ public class PlaceInQueueController implements PlaceInQueueApi {
   private final PlaceInQueueService service;
 
   @Override
-  public List<PlaceInQueueDTO> findAll() {
+  public List<PlaceInQueueDTO> getAll() {
     return service.findAll();
   }
 
   @Override
-  public PlaceInQueueDTO findByDriver() {
-    return service.findByDriver();
-  }
-
-  @Override
-  public PlaceInQueueDTO findByPassenger() {
-    return service.findByPassenger();
+  public PlaceInQueueDTO getCurrent() {
+    return service.findCurrent();
   }
 
   @Override

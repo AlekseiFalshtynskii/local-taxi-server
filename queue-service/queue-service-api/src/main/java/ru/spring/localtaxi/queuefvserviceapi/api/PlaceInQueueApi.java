@@ -10,13 +10,10 @@ import ru.spring.localtaxi.queuefvserviceapi.dto.PlaceInQueueDTO;
 public interface PlaceInQueueApi {
 
   @GetMapping("/api/queue")
-  List<PlaceInQueueDTO> findAll();
+  List<PlaceInQueueDTO> getAll();
 
-  @GetMapping("/api/queue/driver")
-  PlaceInQueueDTO findByDriver();
-
-  @GetMapping("/api/queue/passenger")
-  PlaceInQueueDTO findByPassenger();
+  @GetMapping("/api/queue/current")
+  PlaceInQueueDTO getCurrent();
 
   @PostMapping("/api/queue/driver")
   List<PlaceInQueueDTO> addDriverInQueue();

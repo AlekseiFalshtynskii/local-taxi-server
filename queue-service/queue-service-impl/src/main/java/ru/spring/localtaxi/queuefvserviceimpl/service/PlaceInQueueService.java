@@ -7,9 +7,7 @@ public interface PlaceInQueueService {
 
   List<PlaceInQueueDTO> findAll();
 
-  PlaceInQueueDTO findByDriver();
-
-  PlaceInQueueDTO findByPassenger();
+  PlaceInQueueDTO findCurrent();
 
   List<PlaceInQueueDTO> addDriverInQueue();
 

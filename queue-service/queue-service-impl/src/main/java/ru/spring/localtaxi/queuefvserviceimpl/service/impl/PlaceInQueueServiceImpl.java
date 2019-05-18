@@ -34,14 +34,12 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
   }
 
   @Override
-  public PlaceInQueueDTO findByDriver() {
-    return fromEntity(repository.findByDriverIdAndEndDTIsNull(userClient.getCurrentUser().getId()));
-  }
-
-  @Override
-  public PlaceInQueueDTO findByPassenger() {
-    return fromEntity(
-        repository.findByPassengerIdsContainsAndEndDTIsNull(userClient.getCurrentUser().getId()));
+  public PlaceInQueueDTO findCurrent() {
+    UserDTO user = userClient.getCurrentUser();
+    if (user.isDriver()) {
+      return fromEntity(repository.findByDriverIdAndEndDTIsNull(user.getId()));
+    }
+    return fromEntity(repository.findByPassengerIdsContainsAndEndDTIsNull(user.getId()));
   }
 
   @Transactional
