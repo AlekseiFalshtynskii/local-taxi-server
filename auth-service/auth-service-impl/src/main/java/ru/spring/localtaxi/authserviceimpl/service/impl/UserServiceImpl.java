@@ -23,7 +23,9 @@ public class UserServiceImpl implements UserService {
   private final PasswordEncoder userPasswordEncoder;
 
   private User currentUser() {
-    return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    return repository.findById(
+        ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId())
+        .orElse(null);
   }
 
   @Override
