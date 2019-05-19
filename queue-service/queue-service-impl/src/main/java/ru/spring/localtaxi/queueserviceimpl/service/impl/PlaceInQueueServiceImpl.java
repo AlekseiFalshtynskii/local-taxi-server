@@ -1,7 +1,7 @@
 package ru.spring.localtaxi.queueserviceimpl.service.impl;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -139,15 +139,15 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
     List<PlaceInQueue> piqsFV = repository.findAllByEndDTIsNotNull();
     if (!piqsFV.isEmpty()) {
       durationFV = piqsFV.parallelStream().mapToLong(
-          placeInQueue -> Duration.between(placeInQueue.getStartDT(), placeInQueue.getEndDT())
-              .getSeconds()).sum();
+          placeInQueue -> ChronoUnit.MILLIS
+              .between(placeInQueue.getStartDT(), placeInQueue.getEndDT())).sum();
     }
 
     List<PlaceInQueueDTO> piqsVF = placeInQueueVFClient.getAllWithEndDT();
     if (!piqsVF.isEmpty()) {
       durationVF = piqsVF.parallelStream().mapToLong(
-          placeInQueue -> Duration.between(placeInQueue.getStartDT(), placeInQueue.getEndDT())
-              .getSeconds()).sum();
+          placeInQueue -> ChronoUnit.MILLIS
+              .between(placeInQueue.getStartDT(), placeInQueue.getEndDT())).sum();
     }
 
     if (!piqsFV.isEmpty() || !piqsVF.isEmpty()) {
@@ -156,20 +156,20 @@ public class PlaceInQueueServiceImpl implements PlaceInQueueService {
 
     if (!piqsFV.isEmpty()) {
       durationFV = piqsFV.parallelStream().mapToLong(
-          placeInQueue -> Duration.between(placeInQueue.getStartFirstDT(), placeInQueue.getEndDT())
-              .getSeconds()).sum();
+          placeInQueue -> ChronoUnit.MILLIS
+              .between(placeInQueue.getStartFirstDT(), placeInQueue.getEndDT())).sum();
     }
 
     if (!piqsVF.isEmpty()) {
       durationVF = piqsVF.parallelStream().mapToLong(
-          placeInQueue -> Duration.between(placeInQueue.getStartFirstDT(), placeInQueue.getEndDT())
-              .getSeconds()).sum();
+          placeInQueue -> ChronoUnit.MILLIS
+              .between(placeInQueue.getStartFirstDT(), placeInQueue.getEndDT())).sum();
     }
 
     if (!piqsFV.isEmpty() || !piqsVF.isEmpty()) {
       waitingPassengers = (durationFV + durationVF) / (piqsFV.size() + piqsVF.size());
     }
-    return StatisticDTO.of(waitingDriverInQueue * 1_000, waitingPassengers * 1_000);
+    return StatisticDTO.of(waitingDriverInQueue, waitingPassengers);
   }
 
   private PlaceInQueueDTO fromEntity(PlaceInQueue placeInQueue) {

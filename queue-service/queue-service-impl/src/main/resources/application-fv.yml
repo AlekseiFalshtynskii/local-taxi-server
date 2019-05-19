@@ -2,6 +2,8 @@ spring:
   profiles: fv
   application:
       name: queue-fv-service
+  liquibase:
+    change-log: classpath:db/database_changelog_fv.xml
 
 server:
   port: 5020

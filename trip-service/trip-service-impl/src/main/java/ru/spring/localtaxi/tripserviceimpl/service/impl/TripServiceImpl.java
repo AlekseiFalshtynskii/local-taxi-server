@@ -1,7 +1,7 @@
 package ru.spring.localtaxi.tripserviceimpl.service.impl;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -86,10 +86,10 @@ public class TripServiceImpl implements TripService {
     List<Trip> trips = repository.findAllByEndDTIsNotNull();
     if (!trips.isEmpty()) {
       duration = trips.parallelStream()
-          .mapToLong(trip -> Duration.between(trip.getStartDT(), trip.getEndDT()).getSeconds())
-          .sum() / trips.size();
+          .mapToLong(trip -> ChronoUnit.MILLIS.between(trip.getStartDT(), trip.getEndDT())).sum()
+          / trips.size();
     }
-    return StatisticDTO.of(duration * 1_000);
+    return StatisticDTO.of(duration);
   }
 
   private TripDTO fromEntity(Trip trip) {
