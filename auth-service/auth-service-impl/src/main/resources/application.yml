@@ -2,6 +2,8 @@ server:
   port: 5010
 
 spring:
+  profiles:
+    active: local
   application:
     name: auth-service
   h2:
@@ -11,8 +13,3 @@ spring:
     show-sql: true
   liquibase:
     change-log: classpath:db/database_changelog.xml
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8282/eureka

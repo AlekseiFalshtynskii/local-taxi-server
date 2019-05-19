@@ -1,0 +1,18 @@
+spring:
+  profiles: docker
+
+security:
+  oauth2:
+    resource:
+      id: localtaxi
+      token-info-uri: http://auth:5010/oauth/check_token
+    client:
+      client-id: localtaxi
+      client-secret: localtaxi@123
+      access-token-uri: http://auth:5010/oauth/token
+      scope: read,write
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka:8282/eureka

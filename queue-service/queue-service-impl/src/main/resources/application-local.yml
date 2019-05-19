@@ -1,0 +1,18 @@
+spring:
+  profiles: local
+
+security:
+  oauth2:
+    resource:
+      id: localtaxi
+      token-info-uri: http://localhost:5010/oauth/check_token
+    client:
+      client-id: localtaxi
+      client-secret: localtaxi@123
+      access-token-uri: http://localhost:5010/oauth/token
+      scope: read,write
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8282/eureka
