@@ -6,6 +6,9 @@ mvn clean package deploy -DskipTests
 cd ../zuul-service
 mvn clean package deploy -DskipTests
 
+cd ../turbine-service
+mvn clean package deploy -DskipTests
+
 cd ../auth-service
 mvn clean package deploy -DskipTests
 

@@ -30,7 +30,7 @@ services:
     ports:
       - 5020:5020
     depends_on:
-      - auth
+      - zuul
   queuevf:
     build:
       context: ./queue-service
@@ -41,7 +41,7 @@ services:
     ports:
       - 5030:5030
     depends_on:
-      - auth
+      - zuul
   trip:
     build: ./trip-service
     ports:
@@ -49,8 +49,26 @@ services:
     environment:
       - "SPRING_PROFILES_ACTIVE=docker"
     depends_on:
+      - zuul
+  turbine:
+    build: ./turbine-service
+    ports:
+      - 5050:5050
+    environment:
+      - "SPRING_PROFILES_ACTIVE=docker"
+    depends_on:
       - auth
+      - queuefv
+      - queuevf
+      - trip
   client:
     build: ../local-taxi-client
     ports:
       - 4200:4200
+    depends_on:
+      - eureka
+      - zuul
+      - auth
+      - queuefv
+      - queuevf
+      - trip
