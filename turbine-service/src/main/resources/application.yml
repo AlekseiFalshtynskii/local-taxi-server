@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: turbine-service
+
+server:
+  port: 5050
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8282/eureka
+
+turbine:
+  app-config: auth-service,queue-fv-service,queue-vf-service,trip-service
+  cluster-name-expression: new String("default")
