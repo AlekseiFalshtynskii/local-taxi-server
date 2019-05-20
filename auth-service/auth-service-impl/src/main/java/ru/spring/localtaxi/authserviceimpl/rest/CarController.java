@@ -1,5 +1,6 @@
 package ru.spring.localtaxi.authserviceimpl.rest;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ public class CarController {
 
   private final CarService service;
 
+  @HystrixCommand
   @PostMapping("/api/cars")
   public void saveCar(@Valid @RequestBody Car car) {
     service.save(car);

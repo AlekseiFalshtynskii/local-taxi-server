@@ -13,3 +13,32 @@ spring:
     show-sql: true
   liquibase:
     change-log: classpath:db/database_changelog.xml
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          strategy: SEMAPHORE
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+          - hystrix.stream
+  metrics:
+    web:
+      server:
+        auto-time-requests: true
+  health:
+    diskspace:
+      enabled: true
+    db:
+      enabled: true
+    defaults:
+      enabled: true
+  endpoint:
+    health:
+      show-details: always

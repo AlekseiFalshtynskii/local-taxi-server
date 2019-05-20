@@ -1,5 +1,6 @@
 package ru.spring.localtaxi.authserviceimpl.rest;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public class AuthController implements AuthApi {
 
   private final PasswordEncoder userPasswordEncoder;
 
+  @HystrixCommand
   @Override
   public ResponseEntity<String> signup(SignUpDTO signUpRequest) {
     if (service.existsByUsername(signUpRequest.getUsername())) {

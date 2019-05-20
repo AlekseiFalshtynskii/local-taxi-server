@@ -30,6 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .and()
         .authorizeRequests()
         .antMatchers("/h2-console/**").permitAll()
+        .antMatchers("/actuator/**").permitAll()
         .anyRequest().authenticated();
   }
 

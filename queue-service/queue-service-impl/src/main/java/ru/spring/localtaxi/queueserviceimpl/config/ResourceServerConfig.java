@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,6 +32,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         .and()
         .authorizeRequests()
         .antMatchers("/h2-console/**").permitAll()
+        .antMatchers("/actuator/**").permitAll()
         .antMatchers(HttpMethod.GET, "/api/queue/**").permitAll()
         .anyRequest().authenticated();
   }
