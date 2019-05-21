@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
           .collect(Collectors.toSet());
       CarDTO car = user.getCar() == null ? null : CarDTO
           .of(user.getCar().getId(), user.getCar().getModel(), user.getCar().getRegNumber(),
-              user.getCar().getColor());
+              user.getCar().getColor(), user.getCar().getVersion());
       return UserDTO
           .of(user.getId(), user.getUsername(), user.getPassword(), user.isEnabled(), authorities,
               user.getEmail(), user.getFirstName(), user.getLastName(),

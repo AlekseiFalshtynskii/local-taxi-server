@@ -1,11 +1,11 @@
 INSERT INTO queue (id, number, driver_id, number_passengers, start_dt, start_first_dt, end_dt, version)
-VALUES (1, 1, 1, 4, {ts '2019-05-20 06:05:31'}, {ts '2019-05-20 06:05:31'}, {ts '2019-05-20 06:33:56'}, 1);
+VALUES (1, 1, 1, 4, {ts '2019-05-20 06:05:31'}, {ts '2019-05-20 06:05:31'}, {ts '2019-05-20 06:33:56'}, 0);
 
 INSERT INTO queue (id, number, driver_id, number_passengers, start_dt, start_first_dt, end_dt, version)
-VALUES (2, 1, 2, 4, {ts '2019-05-20 06:10:15'}, {ts '2019-05-20 06:33:56'}, {ts '2019-05-20 06:45:11'}, 1);
+VALUES (2, 1, 2, 4, {ts '2019-05-20 06:10:15'}, {ts '2019-05-20 06:33:56'}, {ts '2019-05-20 06:45:11'}, 0);
 
 INSERT INTO queue (id, number, driver_id, number_passengers, start_dt, start_first_dt, end_dt, version)
-VALUES (3, 1, 3, 4, {ts '2019-05-20 06:35:43'}, {ts '2019-05-20 06:45:11'}, {ts '2019-05-20 07:13:56'}, 1);
+VALUES (3, 1, 3, 4, {ts '2019-05-20 06:35:43'}, {ts '2019-05-20 06:45:11'}, {ts '2019-05-20 07:13:56'}, 0);
 
 INSERT INTO place_in_queue_passenger_ids (place_in_queue_id, passenger_id) VALUES (1, 6);
 INSERT INTO place_in_queue_passenger_ids (place_in_queue_id, passenger_id) VALUES (1, 7);

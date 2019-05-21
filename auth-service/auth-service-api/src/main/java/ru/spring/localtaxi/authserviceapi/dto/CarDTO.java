@@ -23,7 +23,9 @@ public class CarDTO {
   @NotBlank
   private String color;
 
-  public static CarDTO of(Long id, String model, String regNumber, String color) {
-    return new CarDTO(id, model, regNumber, color);
+  private Long version;
+
+  public static CarDTO of(Long id, String model, String regNumber, String color, Long version) {
+    return new CarDTO(id, model, regNumber, color, version);
   }
 }
