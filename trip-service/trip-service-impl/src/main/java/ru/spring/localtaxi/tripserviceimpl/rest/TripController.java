@@ -4,14 +4,14 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spring.localtaxi.tripserviceapi.api.TripApi;
+import ru.spring.localtaxi.tripserviceapi.api.TripAPI;
 import ru.spring.localtaxi.tripserviceapi.dto.StatisticDTO;
 import ru.spring.localtaxi.tripserviceapi.dto.TripDTO;
 import ru.spring.localtaxi.tripserviceimpl.service.TripService;
 
 @RestController
 @AllArgsConstructor
-public class TripController implements TripApi {
+public class TripController implements TripAPI {
 
   private final TripService service;
 

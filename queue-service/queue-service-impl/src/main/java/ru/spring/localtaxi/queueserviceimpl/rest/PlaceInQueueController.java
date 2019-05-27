@@ -4,14 +4,14 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spring.localtaxi.queueserviceapi.api.PlaceInQueueApi;
+import ru.spring.localtaxi.queueserviceapi.api.PlaceInQueueAPI;
 import ru.spring.localtaxi.queueserviceapi.dto.PlaceInQueueDTO;
 import ru.spring.localtaxi.queueserviceapi.dto.StatisticDTO;
 import ru.spring.localtaxi.queueserviceimpl.service.PlaceInQueueService;
 
 @RestController
 @AllArgsConstructor
-public class PlaceInQueueController implements PlaceInQueueApi {
+public class PlaceInQueueController implements PlaceInQueueAPI {
 
   private final PlaceInQueueService service;
 

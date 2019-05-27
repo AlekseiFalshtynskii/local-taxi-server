@@ -4,7 +4,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spring.localtaxi.authserviceapi.api.UserApi;
+import ru.spring.localtaxi.authserviceapi.api.UserAPI;
 import ru.spring.localtaxi.authserviceapi.dto.EmailDTO;
 import ru.spring.localtaxi.authserviceapi.dto.FioDTO;
 import ru.spring.localtaxi.authserviceapi.dto.PasswordDTO;
@@ -14,7 +14,7 @@ import ru.spring.localtaxi.authserviceimpl.service.UserService;
 
 @RestController
 @AllArgsConstructor
-public class UserController implements UserApi {
+public class UserController implements UserAPI {
 
   private final UserService service;
 

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.spring.localtaxi.queueserviceapi.dto.PlaceInQueueDTO;
 import ru.spring.localtaxi.queueserviceapi.dto.StatisticDTO;
 
-public interface PlaceInQueueApi {
+public interface PlaceInQueueAPI {
 
   @GetMapping("/api/queue")
   List<PlaceInQueueDTO> getAllActive();

@@ -12,7 +12,7 @@ import ru.spring.localtaxi.authserviceapi.dto.PasswordDTO;
 import ru.spring.localtaxi.authserviceapi.dto.UserDTO;
 import ru.spring.localtaxi.authserviceapi.dto.UsernameDTO;
 
-public interface UserApi {
+public interface UserAPI {
 
   @GetMapping("/api/users")
   UserDTO getCurrentUser();

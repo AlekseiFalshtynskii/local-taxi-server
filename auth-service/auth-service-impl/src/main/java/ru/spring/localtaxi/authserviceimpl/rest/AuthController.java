@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
-import ru.spring.localtaxi.authserviceapi.api.AuthApi;
+import ru.spring.localtaxi.authserviceapi.api.AuthAPI;
 import ru.spring.localtaxi.authserviceapi.dto.SignUpDTO;
 import ru.spring.localtaxi.authserviceapi.enums.Authorities;
 import ru.spring.localtaxi.authserviceimpl.domain.Authority;
@@ -18,7 +18,7 @@ import ru.spring.localtaxi.authserviceimpl.service.UserService;
 
 @RestController
 @AllArgsConstructor
-public class AuthController implements AuthApi {
+public class AuthController implements AuthAPI {
 
   private final UserService service;
 

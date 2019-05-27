@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ru.spring.localtaxi.tripserviceapi.dto.StatisticDTO;
 import ru.spring.localtaxi.tripserviceapi.dto.TripDTO;
 
-public interface TripApi {
+public interface TripAPI {
 
   @PostMapping("/api/trips/start")
   TripDTO start();
